@@ -1,0 +1,42 @@
+{
+  "tokenizer": {
+    "model_file": "spm.model"
+  },
+  "dataset": {
+    "dataset_dir": "TinyStories",
+    "max_len": 256
+  },
+  "dataloader": {
+    "batch_size": 512,
+    "num_workers": 5
+  },
+  "model": {
+    "type": "NikitosGPT",
+    "args": {
+      "d_model": 256,
+      "nhead": 4,
+      "num_layers": 4,
+      "dim_feedforward": 1024,
+      "dropout": 0.05,
+      "max_len": 256
+    }
+  },
+  "optimizer": {
+    "type": "Adam",
+    "args": {
+      "lr": 1e-4
+    }
+  },
+  "criterion": {
+    "type": "CELoss",
+    "args": {}
+  },
+  "trainer": {
+    "num_epochs": 15,
+    "checkpoint_save_period": 5,
+
+    "wandb_project": "LLM",
+
+    "clip_grad_norm": 10
+  }
+}
