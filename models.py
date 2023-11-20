@@ -47,11 +47,11 @@ class NikitosGPT(nn.Module):
         self.fc = nn.Linear(d_model, vocab_size)
 
     def forward(self, text_encoded, lengths, **batch):
-        x = self.embed(text_encoded[:, :-1]) * math.sqrt(self.d_model)  # B x L x E
+        x = self.embed(text_encoded) * math.sqrt(self.d_model)  # B x L x E
         x = self.pos_enc(x)
         x = self.encoder(x,
-                         self.generate_square_subsequent_mask(text_encoded.size(1) - 1).to(x.device),
-                         self.get_pad_mask_from_lengths(lengths)[:, :-1].to(x.device))
+                         self.generate_square_subsequent_mask(text_encoded.size(1)).to(x.device),
+                         self.get_pad_mask_from_lengths(lengths).to(x.device))
         x = self.fc(x)
         return {'logits': x}
 

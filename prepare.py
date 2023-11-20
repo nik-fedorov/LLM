@@ -60,6 +60,7 @@ def prepare_tiny_stories_dataset():
 
     # prepare train/test split
     # counter = 4967871
+    counter = 100000
     indices = list(range(counter))
     random.shuffle(indices)
     train_len = int(0.95 * counter)
