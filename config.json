@@ -8,35 +8,52 @@
   },
   "dataloader": {
     "batch_size": 512,
-    "num_workers": 5
+    "num_workers": 8
   },
   "model": {
     "type": "NikitosGPT",
     "args": {
-      "d_model": 256,
+      "d_model": 768,
       "nhead": 4,
-      "num_layers": 4,
-      "dim_feedforward": 1024,
-      "dropout": 0.05,
-      "max_len": 256
+      "num_layers": 2,
+      "dim_feedforward": 3072,
+      "dropout": 0.1
     }
   },
   "optimizer": {
     "type": "Adam",
     "args": {
-      "lr": 1e-4
+      "lr": 1.0,
+      "betas": [0.9, 0.98],
+      "eps": 1e-9
     }
+  },
+  "scheduler": {
+    "type": "WarmupLR",
+    "args": {
+      "d_model": 768,
+      "warmup_steps": 4000
+    },
+    "module": "scheduler"
   },
   "criterion": {
     "type": "CELoss",
     "args": {}
   },
   "trainer": {
-    "num_epochs": 15,
+    "num_epochs": 1000,
     "checkpoint_save_period": 5,
+    "checkpoint_save_dir": "checkpoints",
+
+    "len_epoch": 500,
+    "log_period": 100,
 
     "wandb_project": "LLM",
+    "wandb_run_name": "big_baseline_warmup",
+    "enable_saving_checkpoints_in_wandb": false,
 
-    "clip_grad_norm": 10
+    "resume_training": null,
+
+    "clip_grad_norm": 10.0
   }
 }

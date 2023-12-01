@@ -1,4 +1,5 @@
 import importlib
+from itertools import repeat
 import json
 
 import torch
@@ -60,3 +61,8 @@ def move_batch_to_device(data, device):
         if isinstance(data[key], torch.Tensor):
             data[key] = data[key].to(device)
     return data
+
+
+def inf_loop(data_loader):
+    for loader in repeat(data_loader):
+        yield from loader

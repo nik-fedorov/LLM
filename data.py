@@ -14,7 +14,7 @@ class TinyStories(Dataset):
 
     def __getitem__(self, item):
         ind = self.indices[item]
-        encoded = np.load(str(self.dataset_dir / f'{ind}.npy'))
+        encoded = np.load(str(self.dataset_dir / 'encoded_texts' / f'{ind}.npy'))
         encoded = encoded[:self.max_len]
         return {'text_encoded': torch.from_numpy(encoded)}
 
@@ -29,4 +29,4 @@ def collate_fn(dataset_items):
     for i, item in enumerate(dataset_items):
         text_encoded[i, :text_encoded_length[i]] = item['text_encoded']
 
-    return {'text_encoded': text_encoded, 'lengths': text_encoded_length, 'batch_size': len(dataset_items)}
+    return {'text_encoded': text_encoded, 'lengths': text_encoded_length}
